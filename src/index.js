@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
-const db = require("./config/db");
+const i18n = require("i18n-express");
 
 const authService = require("./services/auth-service");
 
@@ -11,6 +11,7 @@ const authorRouter = require("./routes/author-router");
 const bookRouter = require("./routes/book-router");
 
 // app.use(cors);
+app.use(i18n);
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
