@@ -7,6 +7,10 @@ router.get("/", async (req, res) => {
   return res.send(await bookService.findAll());
 });
 
+router.get("/:id", async (req, res) => {
+  return res.send(await bookService.findById(req.params.id));
+});
+
 router.post("/", async (req, res) => {
   const book = await bookService.findByTitle(req.body.title);
   if (book) return res.status(409).json({ message: "Book already exists" });
@@ -18,7 +22,28 @@ router.post("/", async (req, res) => {
   );
   return res
     .status(201)
-    .json({ message: "Book created successfully", author: createdBook });
+    .json({ message: "Book created successfully", book: createdBook });
+});
+
+router.put("/:id", async (req, res) => {
+  const book = await bookService.findByTitle(req.params.id);
+  if (!book) return res.status(400).json({ message: "Book does not exist" });
+
+  const updatedBook = await bookService.update(req.body.title, req.body.date);
+  return res
+    .status(200)
+    .json({ message: "Book updated successfully", book: updatedBook });
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const book = await bookService.findById(id);
+  if (!book) return res.status(400).json({ message: "Book does not exist" });
+
+  const deletedBook = await bookService.delete(id);
+  return res
+    .status(200)
+    .json({ message: "Book successfully deleted", book: deletedBook });
 });
 
 module.exports = router;

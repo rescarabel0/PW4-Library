@@ -15,6 +15,8 @@ const Author = db.define("author", {
   },
 });
 
-Author.hasMany(Book);
+Author.hasMany(Book, {
+  onDelete: "CASCADE",
+});
 
 module.exports = Author;
