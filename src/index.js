@@ -20,6 +20,7 @@ app.use("/user", authService.authenticate, userRouter);
 app.use("/author", authService.authenticate, authorRouter);
 app.use("/book", authService.authenticate, bookRouter);
 
-const server = app.listen(() => {
-  console.log(`Listening on port ${server.address().port}`);
+const port = 5050;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
